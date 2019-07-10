@@ -426,20 +426,20 @@ def main(_):
                                            activate_decay=False)
 
   algos = [
-      UniformSampling('Uniform Sampling', hparams),
-      UniformSampling('Uniform Sampling 2', hparams),
-      FixedPolicySampling('fixed1', [0.75, 0.25], hparams),
-      FixedPolicySampling('fixed2', [0.25, 0.75], hparams),
-      PosteriorBNNSampling('RMS', hparams_rms, 'RMSProp'),
-      PosteriorBNNSampling('Dropout', hparams_dropout, 'RMSProp'),
-      PosteriorBNNSampling('BBB', hparams_bbb, 'Variational'),
+      # UniformSampling('Uniform Sampling', hparams),
+      # UniformSampling('Uniform Sampling 2', hparams),
+      # FixedPolicySampling('fixed1', [0.75, 0.25], hparams),
+      # FixedPolicySampling('fixed2', [0.25, 0.75], hparams),
+      # PosteriorBNNSampling('RMS', hparams_rms, 'RMSProp'),
+      # PosteriorBNNSampling('Dropout', hparams_dropout, 'RMSProp'),
+      # PosteriorBNNSampling('BBB', hparams_bbb, 'Variational'),
       NeuralLinearPosteriorSampling('NeuralLinear', hparams_nlinear),
-      NeuralLinearPosteriorSampling('NeuralLinear2', hparams_nlinear2),
-      LinearFullPosteriorSampling('LinFullPost', hparams_linear),
-      BootstrappedBNNSampling('BootRMS', hparams_rms),
-      ParameterNoiseSampling('ParamNoise', hparams_pnoise),
-      PosteriorBNNSampling('BBAlphaDiv', hparams_alpha_div, 'AlphaDiv'),
-      PosteriorBNNSampling('MultitaskGP', hparams_gp, 'GP'),
+      # NeuralLinearPosteriorSampling('NeuralLinear2', hparams_nlinear2),
+      # LinearFullPosteriorSampling('LinFullPost', hparams_linear),
+      # BootstrappedBNNSampling('BootRMS', hparams_rms),
+      # ParameterNoiseSampling('ParamNoise', hparams_pnoise),
+      # PosteriorBNNSampling('BBAlphaDiv', hparams_alpha_div, 'AlphaDiv'),
+      # PosteriorBNNSampling('MultitaskGP', hparams_gp, 'GP'),
   ]
 
   # Run contextual bandit problem
