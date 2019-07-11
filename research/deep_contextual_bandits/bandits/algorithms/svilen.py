@@ -60,6 +60,7 @@ class Svilen():
     def __init__(self, name, hparams):
         self.name = name
         self.hparams = hparams
+        print(hparams)
 
     def update(self, context, actions, rewards):
         # model = GPRegressionModel()
