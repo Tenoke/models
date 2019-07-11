@@ -72,7 +72,13 @@ class Svilen():
 
     def update(self, context, actions, rewards):
         self.x.append(context)
-        self.y.append(actions if rewards > 0 else abs(actions-1))
+        # self.y.append(actions if rewards > 0 else abs(actions-1))
+        if rewards > 0:
+            self.y.append(actions)
+        else if rewards == 0:
+            self.y.append(0.5)
+        else if rewards < 0:
+            self.y.append(abs(actions-1))
         self.model = GPRegressionModel(torch.Tensor(self.x), torch.Tensor(self.y), GaussianLikelihood())
         mll = ExactMarginalLogLikelihood(self.model.likelihood, self.model)
         fit_gpytorch_model(mll)
