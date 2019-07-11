@@ -10,6 +10,7 @@ import gpytorch
 # from gpytorch.variational import CholeskyVariationalDistribution
 # from gpytorch.variational import VariationalStrategy
 from gpytorch.likelihoods import GaussianLikelihood
+from gpytorch.mlls import ExactMarginalLogLikelihood
 
 
 # import os
