@@ -9,6 +9,8 @@ import gpytorch
 # from gpytorch.models import AbstractVariationalGP
 # from gpytorch.variational import CholeskyVariationalDistribution
 # from gpytorch.variational import VariationalStrategy
+from gpytorch.likelihoods import GaussianLikelihood
+
 
 # import os
 # import pickle
@@ -43,27 +45,35 @@ class Net(nn.Module):
 
 # GP model
 class GPRegressionModel(gpytorch.models.ExactGP):
-        def __init__(self, train_x, train_y, likelihood, input_d):
+        def __init__(self, train_x, train_y, likelihood, input_d=0):
             super(GPRegressionModel, self).__init__(train_x, train_y, likelihood)
             self.mean_module = gpytorch.means.ConstantMean()
             self.covar_module = gpytorch.kernels.ScaleKernel(gpytorch.kernels.RBFKernel())
-            self.net = Net(input_d)
+            self.model = None
+            # self.net = Net(input_d)
 
         def forward(self, x):
-            projected_x = self.net(x)
+            # projected_x = self.net(x)
 
-            mean_x = self.mean_module(projected_x)
-            covar_x = self.covar_module(projected_x)
+            mean_x = self.mean_module(x)
+            covar_x = self.covar_module(x)
             return gpytorch.distributions.MultivariateNormal(mean_x, covar_x)
 
 class Svilen():
     def __init__(self, name, hparams):
         self.name = name
         self.hparams = hparams
+        self.x = []
+        self.y = []
         print(hparams)
 
     def update(self, context, actions, rewards):
-        # model = GPRegressionModel()
+        self.x.append(context)
+        self.y.append(actions if rewards > 0 else abs(actions-1))
+        self.model = GPRegressionModel(torch.Tensor(x), torch.Tensor(y), GaussianLikelihood())
+        mll = ExactMarginalLogLikelihood(model.likelihood, model)
+        fit_gpytorch_model(mll)
+
         print('c', context)
         print(len(context))
         print('a', actions)
@@ -71,9 +81,9 @@ class Svilen():
 
     def action(self, context):
         print('a-c', context)
-        # return random.randint(0, self.hparams.num_actions-1)
-        return 1
-
+        if not self.model
+            return random.randint(0, self.hparams.num_actions-1)
+        return model(torch.Tensor(context).sample().mean)
 # dx = torch.Tensor(train_x).cuda()
 # dy = torch.Tensor(train_y).cuda()
 
