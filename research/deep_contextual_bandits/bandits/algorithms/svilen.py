@@ -65,6 +65,7 @@ class Svilen():
     def update(self, context, actions, rewards):
         # model = GPRegressionModel()
         print('c', context)
+        print(len(context))
         print('a', actions)
         print ('r', rewards)
 
