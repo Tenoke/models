@@ -49,7 +49,6 @@ class GPRegressionModel(gpytorch.models.ExactGP):
             super(GPRegressionModel, self).__init__(train_x, train_y, likelihood)
             self.mean_module = gpytorch.means.ConstantMean()
             self.covar_module = gpytorch.kernels.ScaleKernel(gpytorch.kernels.RBFKernel())
-            self.model = None
             # self.net = Net(input_d)
 
         def forward(self, x):
@@ -65,6 +64,8 @@ class Svilen():
         self.hparams = hparams
         self.x = []
         self.y = []
+        self.model = None
+
         print(hparams)
 
     def update(self, context, actions, rewards):
