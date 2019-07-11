@@ -1,68 +1,75 @@
-# import sys, os
-# import struct
-# import matplotlib.pyplot as plt
-# import heapq
-# import base64
-# import random
-# import numpy as np
+import sys, os
+import struct
+import heapq
+import base64
+import random
+import numpy as np
 
-# import gpytorch
-# from gpytorch.models import AbstractVariationalGP
-# from gpytorch.variational import CholeskyVariationalDistribution
-# from gpytorch.variational import VariationalStrategy
+import gpytorch
+from gpytorch.models import AbstractVariationalGP
+from gpytorch.variational import CholeskyVariationalDistribution
+from gpytorch.variational import VariationalStrategy
 
-# import os
-# import pickle
-# import numpy as np
-# import PIL.Image
-# import dnnlib
-# import dnnlib.tflib as tflib
-# import config
+import os
+import pickle
+import numpy as np
+import PIL.Image
+import dnnlib
+import dnnlib.tflib as tflib
+import config
 
 
-# import torch
-# import torch.nn as nn
-# import torch.nn.functional as F
-# import torch.optim as optim
+import torch
+import torch.nn as nn
+import torch.nn.functional as F
+import torch.optim as optim
 
-# from sklearn.model_selection import train_test_split
+from sklearn.model_selection import train_test_split
 
+
+
+# Dep net
+class Net(nn.Module):
+
+    def __init__(self, input_d):
+        super(Net, self).__init__()
+        self.fc1 = nn.Linear(input_d, int(input_d/2))
+
+    def forward(self, x):
+        x = torch.sigmoid(self.fc1(x))
+        return x
+
+
+# GP model
+class GPRegressionModel(gpytorch.models.ExactGP):
+        def __init__(self, train_x, train_y, likelihood, input_d):
+            super(GPRegressionModel, self).__init__(train_x, train_y, likelihood)
+            self.mean_module = gpytorch.means.ConstantMean()
+            self.covar_module = gpytorch.kernels.ScaleKernel(gpytorch.kernels.RBFKernel())
+            self.net = Net(input_d)
+
+        def forward(self, x):
+            projected_x = self.net(x)
+
+            mean_x = self.mean_module(projected_x)
+            covar_x = self.covar_module(projected_x)
+            return gpytorch.distributions.MultivariateNormal(mean_x, covar_x)
 
 class Svilen():
-	def update(self, context, actions, rewards):
-		print('c', context)
-		print('a', actions)
-		print ('r', rewards)
+    def __init__(self, name, hparams):
+        self.name = name
+        self.hparams = hparams
 
-	def action(self, context):
-		print('a-c', context)
-		return context
-# # Dep net
-# class Net(nn.Module):
+    def update(self, context, actions, rewards):
+    	model = GPRegressionModel()
+        print('c', context)
+        print('a', actions)
+        print ('r', rewards)
 
-#     def __init__(self, input_d):
-#         super(Net, self).__init__()
-#         self.fc1 = nn.Linear(input_d, int(input_d/2))
+    def action(self, context):
+        print('a-c', context)
+        return 1
 
-#     def forward(self, x):
-#         x = torch.sigmoid(self.fc1(x))
-#         return x
-
-
-# # GP model
-# class GPRegressionModel(gpytorch.models.ExactGP):
-#         def __init__(self, train_x, train_y, likelihood):
-#             super(GPRegressionModel, self).__init__(train_x, train_y, likelihood)
-#             self.mean_module = gpytorch.means.ConstantMean()
-#             self.covar_module = gpytorch.kernels.ScaleKernel(gpytorch.kernels.RBFKernel())
-#             self.net = Net(input_d)
-
-#         def forward(self, x):
-#             projected_x = self.net(x)
-
-#             mean_x = self.mean_module(projected_x)
-#             covar_x = self.covar_module(projected_x)
-#             return gpytorch.distributions.MultivariateNormal(mean_x, covar_x)
 
 # dx = torch.Tensor(train_x).cuda()
 # dy = torch.Tensor(train_y).cuda()
