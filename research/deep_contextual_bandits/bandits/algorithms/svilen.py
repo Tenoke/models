@@ -21,6 +21,7 @@ import gpytorch
 
 import torch
 import torch.nn as nn
+import random
 # import torch.nn.functional as F
 # import torch.optim as optim
 
@@ -68,7 +69,7 @@ class Svilen():
 
     def action(self, context):
         print('a-c', context)
-        return 1
+        return random.randint(0,self.hparams.num_actions)
 
 
 # dx = torch.Tensor(train_x).cuda()
