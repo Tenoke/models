@@ -112,6 +112,8 @@ class NeuralLinearPosteriorSampling(BanditAlgorithm):
     vals = [
         np.dot(beta_s[i], z_context.T) for i in range(self.hparams.num_actions)
     ]
+    res = np.argmax(vals)
+    print(res)
     return np.argmax(vals)
 
   def update(self, context, action, reward):

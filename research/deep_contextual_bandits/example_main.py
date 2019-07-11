@@ -435,7 +435,7 @@ def main(_):
       # PosteriorBNNSampling('Dropout', hparams_dropout, 'RMSProp'),
       # PosteriorBNNSampling('BBB', hparams_bbb, 'Variational'),
       NeuralLinearPosteriorSampling('NeuralLinear', hparams_nlinear),
-      Svilen('Svilen', hparams_linear)
+      # Svilen('Svilen', hparams_linear)
       # NeuralLinearPosteriorSampling('NeuralLinear2', hparams_nlinear2),
       # LinearFullPosteriorSampling('LinFullPost', hparams_linear),
       # BootstrappedBNNSampling('BootRMS', hparams_rms),
