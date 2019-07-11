@@ -61,7 +61,7 @@ class Svilen():
         self.hparams = hparams
 
     def update(self, context, actions, rewards):
-    	model = GPRegressionModel()
+        # model = GPRegressionModel()
         print('c', context)
         print('a', actions)
         print ('r', rewards)
