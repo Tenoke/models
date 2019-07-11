@@ -86,7 +86,7 @@ class Svilen():
         print('a-c', context)
         if not self.model:
             return random.randint(0, self.hparams.num_actions-1)
-        return self.model(torch.Tensor(context)).sample().mean
+        return self.model(torch.Tensor(context).unsqueeze(0)).sample().mean
 # dx = torch.Tensor(train_x).cuda()
 # dy = torch.Tensor(train_y).cuda()
 
