@@ -42,6 +42,7 @@ from bandits.data.data_sampler import sample_mushroom_data
 from bandits.data.data_sampler import sample_statlog_data
 from bandits.data.data_sampler import sample_stock_data
 from bandits.algorithms.fixed_policy_sampling import FixedPolicySampling
+from bandits.algorithms.svilen import Svilen
 from bandits.algorithms.linear_full_posterior_sampling import LinearFullPosteriorSampling
 from bandits.algorithms.neural_linear_sampling import NeuralLinearPosteriorSampling
 from bandits.algorithms.parameter_noise_sampling import ParameterNoiseSampling
@@ -434,6 +435,7 @@ def main(_):
       # PosteriorBNNSampling('Dropout', hparams_dropout, 'RMSProp'),
       # PosteriorBNNSampling('BBB', hparams_bbb, 'Variational'),
       NeuralLinearPosteriorSampling('NeuralLinear', hparams_nlinear),
+      Svilen()
       # NeuralLinearPosteriorSampling('NeuralLinear2', hparams_nlinear2),
       # LinearFullPosteriorSampling('LinFullPost', hparams_linear),
       # BootstrappedBNNSampling('BootRMS', hparams_rms),
