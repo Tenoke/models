@@ -70,7 +70,7 @@ class Svilen():
 
     def action(self, context):
         print('a-c', context)
-        return random.randint(0,self.hparams.num_actions-1)
+        return random.randint(0,self.context_dim)
 
 
 # dx = torch.Tensor(train_x).cuda()
