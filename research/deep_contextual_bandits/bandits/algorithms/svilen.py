@@ -78,13 +78,13 @@ class Svilen():
 
     def update(self, context, actions, rewards):
         self.x.append(context)
-        # self.y.append(actions if rewards > 0 else abs(actions-1))
-        if rewards > 0:
-            self.y.append(actions)
-        elif rewards == 0:
-            self.y.append(0.5)
-        elif rewards < 0:
-            self.y.append(abs(actions-1))
+        self.y.append(actions if rewards > 0 else abs(actions-1))
+        # if rewards > 0:
+        #     self.y.append(actions)
+        # elif rewards == 0:
+        #     self.y.append(0.5)
+        # elif rewards < 0:
+        #     self.y.append(abs(actions-1))
         likelihood = GaussianLikelihood(
             noise_prior=noise_prior,
             noise_constraint=GreaterThan(
