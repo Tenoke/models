@@ -77,7 +77,6 @@ class Svilen():
         self.y = []
         self.model = None
 
-        print(hparams)
 
     def update(self, context, actions, rewards):
         self.x.append(context)
