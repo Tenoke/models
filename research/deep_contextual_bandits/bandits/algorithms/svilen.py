@@ -15,6 +15,8 @@ from botorch.fit import fit_gpytorch_model
 from gpytorch.priors.torch_priors import GammaPrior
 from gpytorch.likelihoods import GaussianLikelihood
 from gpytorch.constraints.constraints import GreaterThan
+from botorch.optim.fit import fit_gpytorch_torch
+
 
 # import os
 # import pickle
@@ -95,7 +97,7 @@ class Svilen():
         )
         self.model = GPRegressionModel(torch.Tensor(self.x), torch.Tensor(self.y), likelihood)
         mll = ExactMarginalLogLikelihood(likelihood, self.model)
-        fit_gpytorch_model(mll)
+        fit_gpytorch_model(mll, optimizer=fit_gpytorch_torch)
 
         print('c', context)
         print(len(context))
