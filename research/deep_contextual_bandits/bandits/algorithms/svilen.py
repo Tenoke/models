@@ -48,7 +48,7 @@ class Net(nn.Module):
 
 noise_prior = GammaPrior(1.1, 0.05)
 noise_prior_mode = (noise_prior.concentration - 1) / noise_prior.rate
-MIN_INFERRED_NOISE_LEVEL = 1e-3 # increase from default due to cholesky issue
+MIN_INFERRED_NOISE_LEVEL = 1e-2 # increase from default due to cholesky issue
 # https://github.com/pytorch/botorch/issues/179
 
 # GP model
