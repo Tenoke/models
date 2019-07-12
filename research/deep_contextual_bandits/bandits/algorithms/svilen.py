@@ -12,7 +12,9 @@ import gpytorch
 from gpytorch.likelihoods import GaussianLikelihood
 from gpytorch.mlls import ExactMarginalLogLikelihood
 from botorch.fit import fit_gpytorch_model
-
+from gpytorch.priors.torch_priors import GammaPrior
+from gpytorch.likelihoods import GaussianLikelihood
+from gpytorch.constraints.constraints import GreaterThan
 
 # import os
 # import pickle
@@ -44,6 +46,10 @@ class Net(nn.Module):
         x = torch.sigmoid(self.fc1(x))
         return x
 
+noise_prior = GammaPrior(1.1, 0.05)
+noise_prior_mode = (noise_prior.concentration - 1) / noise_prior.rate
+MIN_INFERRED_NOISE_LEVEL = 1e-3 # increase from default due to cholesky issue
+# https://github.com/pytorch/botorch/issues/179
 
 # GP model
 class GPRegressionModel(gpytorch.models.ExactGP):
@@ -79,6 +85,14 @@ class Svilen():
             self.y.append(0.5)
         elif rewards < 0:
             self.y.append(abs(actions-1))
+        likelihood = GaussianLikelihood(
+            noise_prior=noise_prior,
+            noise_constraint=GreaterThan(
+                MIN_INFERRED_NOISE_LEVEL,
+                transform=None,
+                initial_value=noise_prior_mode,
+            ),
+        )
         self.model = GPRegressionModel(torch.Tensor(self.x), torch.Tensor(self.y), GaussianLikelihood())
         mll = ExactMarginalLogLikelihood(self.model.likelihood, self.model)
         fit_gpytorch_model(mll)
