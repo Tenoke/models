@@ -100,8 +100,8 @@ class Svilen():
         mll = ExactMarginalLogLikelihood(likelihood, self.model).to(device)
         fit_gpytorch_model(mll, optimizer=fit_gpytorch_torch)
 
-        print('a', actions)
-        print ('r', rewards)
+        # print('a', actions)
+        # print ('r', rewards)
 
     def action(self, context):
         if not self.model:

@@ -434,7 +434,7 @@ def main(_):
       # PosteriorBNNSampling('RMS', hparams_rms, 'RMSProp'),
       # PosteriorBNNSampling('Dropout', hparams_dropout, 'RMSProp'),
       # PosteriorBNNSampling('BBB', hparams_bbb, 'Variational'),
-      NeuralLinearPosteriorSampling('NeuralLinear', hparams_nlinear),
+      # NeuralLinearPosteriorSampling('NeuralLinear', hparams_nlinear),
       Svilen('Svilen', hparams_linear)
       # NeuralLinearPosteriorSampling('NeuralLinear2', hparams_nlinear2),
       # LinearFullPosteriorSampling('LinFullPost', hparams_linear),
@@ -451,6 +451,6 @@ def main(_):
 
   # Display results
   display_results(algos, opt_rewards, opt_actions, h_rewards, t_init, data_type)
-
+  print(results)
 if __name__ == '__main__':
   app.run(main)
