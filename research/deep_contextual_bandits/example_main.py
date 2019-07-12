@@ -448,7 +448,9 @@ def main(_):
   t_init = time.time()
   results = run_contextual_bandit(context_dim, num_actions, dataset, algos)
   _, h_rewards = results
-
+  import pickle
+  with open('results', 'wb') as f:
+    pickle.dump(results, f)
   # Display results
   display_results(algos, opt_rewards, opt_actions, h_rewards, t_init, data_type)
   print(results)
