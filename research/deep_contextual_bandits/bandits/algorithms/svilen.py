@@ -35,6 +35,7 @@ import random
 
 # from sklearn.model_selection import train_test_split
 
+device = output_device = torch.device('cuda:0' if torch.cuda.is_available() else 'cpu:0')
 
 
 # Dep net
@@ -95,21 +96,18 @@ class Svilen():
                 initial_value=noise_prior_mode,
             ),
         )
-        self.model = GPRegressionModel(torch.Tensor(self.x), torch.Tensor(self.y), likelihood)
-        mll = ExactMarginalLogLikelihood(likelihood, self.model)
+        self.model = GPRegressionModel(torch.Tensor(self.x).to(device), torch.Tensor(self.y).to(device), likelihood).to(device)
+        mll = ExactMarginalLogLikelihood(likelihood, self.model).to(device)
         fit_gpytorch_model(mll, optimizer=fit_gpytorch_torch)
 
-        print('c', context)
-        print(len(context))
         print('a', actions)
         print ('r', rewards)
 
     def action(self, context):
-        print('a-c', context)
         if not self.model:
             return random.randint(0, self.hparams.num_actions-1)
 
-        return int(self.model(torch.Tensor(context).unsqueeze(0)).mean)
+        return int(self.model(torch.Tensor(context).unsqueeze(0).to(device)).mean)
 # dx = torch.Tensor(train_x).cuda()
 # dy = torch.Tensor(train_y).cuda()
 
