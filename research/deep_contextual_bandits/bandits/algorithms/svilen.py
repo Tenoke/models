@@ -93,7 +93,7 @@ class Svilen():
                 initial_value=noise_prior_mode,
             ),
         )
-        self.model = GPRegressionModel(torch.Tensor(self.x), torch.Tensor(self.y), GaussianLikelihood())
+        self.model = GPRegressionModel(torch.Tensor(self.x), torch.Tensor(self.y), likelihood)
         mll = ExactMarginalLogLikelihood(self.model.likelihood, self.model)
         fit_gpytorch_model(mll)
 
