@@ -94,7 +94,7 @@ class Svilen():
             ),
         )
         self.model = GPRegressionModel(torch.Tensor(self.x), torch.Tensor(self.y), likelihood)
-        mll = ExactMarginalLogLikelihood(self.model.likelihood, self.model)
+        mll = ExactMarginalLogLikelihood(likelihood, self.model)
         fit_gpytorch_model(mll)
 
         print('c', context)
